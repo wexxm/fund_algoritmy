@@ -1,3 +1,5 @@
+import timeit
+
 def count_vertices(edges):
     """Подсчет количества вершин в графе."""
     vertices = set()
@@ -5,6 +7,7 @@ def count_vertices(edges):
         vertices.add(edge[0])
         vertices.add(edge[1])
     return len(vertices)
+
 def get_vertices(edges):
     """Получение списка вершин из списка ребер."""
     vertices = set()
@@ -12,6 +15,7 @@ def get_vertices(edges):
         vertices.add(edge[0])
         vertices.add(edge[1])
     return list(vertices)
+
 def wave_algorithm(edges, start, end):
     """Реализация волнового алгоритма."""
     vertices = get_vertices(edges)
@@ -70,10 +74,24 @@ def wave_algorithm(edges, start, end):
         return path, visited
     else:
         return None, visited
+
 # Пример использования
 edges = [(1, 2), (2, 3), (2, 4), (4, 5), (1, 6), (6, 7), (4, 5)]
 start = 1
 end = 5
+
+# Замер времени для count_vertices
+time_count_vertices = timeit.timeit(lambda: count_vertices(edges), number=1000)
+print(f"Время выполнения count_vertices: {time_count_vertices:.9f} секунд")
+
+# Замер времени для get_vertices
+time_get_vertices = timeit.timeit(lambda: get_vertices(edges), number=1000)
+print(f"Время выполнения get_vertices: {time_get_vertices:.9f} секунд")
+
+# Замер времени для wave_algorithm
+time_wave_algorithm = timeit.timeit(lambda: wave_algorithm(edges, start, end), number=100)
+print(f"Время выполнения wave_algorithm: {time_wave_algorithm:.9f} секунд") # Меньшее количество итераций из-за большей длительности
+
 path, visited = wave_algorithm(edges, start, end)
 if path:
     print(f"Кратчайший путь от {start} до {end}: {path}")
